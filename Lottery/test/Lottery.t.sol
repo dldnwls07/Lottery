@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import {Test, console} from "forge-std/Test.sol";
 import {Lottery} from "../src/Lottery.sol";
 
-contract CounterTest is Test {
+contract LotteryTest is Test {
     Lottery public lottery;
     address public user; //Lottery 지갑 주소
 
@@ -16,15 +16,15 @@ contract CounterTest is Test {
     }
 
     function test_play() public {
-    console.log("user.balance:", user.balance);
-    bool result;
-    for (uint8 i = 1;  i < 15; i++) {
-        vm.warp(i);
-        vm.prank(user); result = lottery.play{value: 0.1 ether}();
-        console.log("block.timestamp: ", block.timestamp);
-        console.log("block.timestamp % 7: ", block.timestamp % 7);
-        console.log("result:", result);
         console.log("user.balance:", user.balance);
+        bool result;
+        for (uint8 i = 1;  i < 15; i++) {
+            vm.warp(i);
+            vm.prank(user); result = lottery.play{value: 0.1 ether}();
+            console.log("block.timestamp: ", block.timestamp);
+            console.log("block.timestamp % 7: ", block.timestamp % 7);
+            console.log("result:", result);
+            console.log("user.balance:", user.balance);
     }
     assertEq(block.timestamp % 7 == 0, result);   
     }
