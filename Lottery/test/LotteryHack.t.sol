@@ -30,7 +30,7 @@ contract LotteryHackTest is Test{
             console.log("block.timestamp: ", block.timestamp);
             console.log("block.timestamp % 7: ", block.timestamp % 7);
             console.log("result:", result);
-            console.log("user.balance:", user.balance);
+            console.log("lotteryHack.balance:", address(lotteryHack).balance);
     }
     assertEq(block.timestamp % 7 == 0, result);   
     }
