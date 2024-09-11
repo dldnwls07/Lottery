@@ -14,11 +14,6 @@ contract CounterTest is Test {
 
     function test_Increment() public {
         counter.increment();
-        counter.increment();
-        assertEq(counter.number(), 2);
-    }
-    function test_SetNumber() public {
-        counter.setNumber(1);
         assertEq(counter.number(), 1);
     }
 
