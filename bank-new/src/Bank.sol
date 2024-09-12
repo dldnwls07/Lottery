@@ -12,9 +12,11 @@ contract Bank {
     function withdraw(uint256 _amount) public {
         if (balances[msg.sender] < _amount) {
             revert();
-        }
-        balances[msg.sender] -= _amount; 
+        } 
         payable(msg.sender).call{value: _amount}("");
+        unchecked{
+        balances[msg.sender] -= _amount;   
+        }
     }
 
     function getBalance() public view returns (uint256) {
