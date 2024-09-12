@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.13;
+
+import {Test, console} from "forge-std/Test.sol";
+import {Bank} from "../src/Bank.sol";
+
+contract BankTest is Test {
+    Bank public bank;
+    address public user;
+
+    function setUp() public {
+        user = vm.addr(0x1234);
+        bank = new Bank();
+        vm.deal(address(bank), 100 ether);
+        vm.deal(user, 1 ether); 
+    }
+
+    function test_Deposit() public {
+        vm.startPrank(user);
+        bank.deposit{value: 1 ether}();
+        assertEq(bank.getBalance(), 1 ether);
+        assertEq(bank.balanceOf(user), 1 ether);
+        assertEq(bank.balances(user), 1 ether);
+    }
+    
+    function test_Withdraw() public {
+        vm.startPrank(user);
+        bank.deposit{value: 1 ether}();
+        bank.withdraw(1 ether);
+        assertEq(bank.getBalance(), 1 ether);
+        assertEq(bank.balanceOf(user), 1 ether);
+        assertEq(bank.balances(user), 1 ether);
+        
+        uint256 bankBalance = address(bank).balance;
+        uint256 userBalance = bank.balanceOf(user);
+
+        console.log("Bank balance:", bankBalance);
+        console.log("User balance:", userBalance);
+
+        assertEq(bankBalance, 10000.2 ether);
+        assertEq(userBalance, depositAmount - withdrawAmount);
+    }
+}
