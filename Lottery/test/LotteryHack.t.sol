@@ -22,10 +22,13 @@ contract LotteryHackTest is Test{
     function test_play() public {
         console.log(user.balance);
         bool result;
-        vm.startPrank(user); 
+        vm.startPrank(user);    
         lotteryHack.desposit{value: 1 ether}();
         for (uint8 i = 1;  i < 15; i++) {
             vm.warp(i);
+            if (block.timestamp % 7 !=0) {
+            vm.expectRevert();
+            }
             result = lotteryHack.playhack();
             console.log("block.timestamp: ", block.timestamp);
             console.log("block.timestamp % 7: ", block.timestamp % 7);
